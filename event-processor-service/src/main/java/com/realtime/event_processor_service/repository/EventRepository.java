@@ -8,6 +8,6 @@ import java.util.UUID;
 
 
 @Repository
-interface EventRepository extends JpaRepository<Event, UUID> {
+public interface EventRepository extends JpaRepository<Event, UUID> {
 
 }

@@ -66,5 +66,14 @@ public class Event {
         this.rawPayload = rawPayload;
     }
 
-
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", action='" + action + '\'' +
+                ", timestamp=" + timestamp +
+                ", rawPayload='" + rawPayload + '\'' +
+                '}';
+    }
 }
