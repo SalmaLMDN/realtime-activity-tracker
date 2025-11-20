@@ -1,4 +1,4 @@
-package com.realtime.event_processor_service;
+package com.realtime.event_processor_service.service;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

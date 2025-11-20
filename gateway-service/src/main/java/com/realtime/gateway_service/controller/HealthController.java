@@ -1,4 +1,4 @@
-package com.realtime.gateway_service;
+package com.realtime.gateway_service.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
