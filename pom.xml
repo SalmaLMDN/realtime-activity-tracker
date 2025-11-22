@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.realtime</groupId>
+    <artifactId>realtime-activity-tracker</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>gateway-service</module>
+        <module>event-processor-service</module>
+        <module>analytics-service</module>
+        <module>alert-service</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+</project>

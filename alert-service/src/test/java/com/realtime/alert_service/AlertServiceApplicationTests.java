@@ -1,10 +1,10 @@
-package com.realtime.event_processor_service;
+package com.realtime.alert_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EventProcessorServiceApplicationTests {
+class AlertServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
