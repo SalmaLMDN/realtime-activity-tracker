@@ -23,6 +23,7 @@ public class AlertEventConsumer {
         alertService.handleEvent(eventDTO);
         alertService.verifyActionCount(eventDTO);
         alertService.verifyTooManyActions(eventDTO);
+        alertService.verifyTooManyCriticalActions(eventDTO);
         System.out.println("Alert service processed event: "+message);
     }
 }

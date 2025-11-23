@@ -19,14 +19,13 @@ import java.util.Map;
 @Service
 public class AlertService {
 
-
-
-
     private final AlertRepository alertRepository;
 
 
     Map<Long, Deque<Instant>> loginEvents = new HashMap<>();
     Map<Long, Deque<Instant>> lastEvents = new HashMap<>();
+    Map<Long, Deque<Instant>> criticalEvents = new HashMap<>();
+    Map<Long, Deque<Instant>> actionEvents = new HashMap<>();
     Map<Long, LastAction> lastActions = new HashMap<>();
 
 
@@ -120,6 +119,35 @@ public class AlertService {
             deque.clear();
         }
 
+    }
+
+    public void verifyTooManyCriticalActions(EventDTO event) {
+        Long userId = event.getUserId();
+        if(userId==null) {
+            System.out.println("User id missing!!!");
+            return;
+        }
+        Instant ts = Instant.parse(event.getTimestamp());
+        String action = event.getAction();
+        if(!AlertConstants.CRITICAL_ACTIONS.contains(action)) {
+            return;
+        }
+        Deque<Instant> deque =  criticalEvents.computeIfAbsent(userId, id-> new ArrayDeque<>());
+        Instant cutoff = ts.minus(AlertConstants.CRITICAL_WINDOW);
+        while(!deque.isEmpty() && deque.peekFirst().isBefore(cutoff)) {
+            deque.pollFirst();
+        }
+        deque.addLast(ts);
+        if(deque.size()>=AlertConstants.CRITICAL_ACTION_THRESHOLD) {
+            Alert alert = new Alert();
+            alert.setUserId(userId);
+            alert.setTimestamp(ts);
+            alert.setReason("Too many critical actions in the last 60 seconds");
+            alert.setCount(deque.size());
+            alertRepository.save(alert);
+
+            deque.clear();
+        }
     }
 
 }

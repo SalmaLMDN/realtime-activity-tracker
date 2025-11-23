@@ -101,8 +101,16 @@ class AlertServiceTest {
         assertThat(captor.getValue().getUserId()).isEqualTo(user);
         assertThat(captor.getValue().getReason()).containsIgnoringCase("Too many actions in last 30 seconds");
         assertThat(captor.getValue().getCount()).isGreaterThanOrEqualTo(10);
+    }
 
-
-
+    @Test
+    void handle_too_many_critical_actions() {
+        long user = 42L;
+        Instant t = Instant.now();
+        service.verifyTooManyCriticalActions(evt(user, "DELETE_ACCOUNT", t));
+        service.verifyTooManyCriticalActions(evt(user, "DELETE_ACCOUNT", t.plusSeconds(5)));
+        verify(repo, never()).save(any(Alert.class));
+        service.verifyTooManyCriticalActions(evt(user, "TRANSFER_FUNDS", t.plusSeconds(5)));
+        verify(repo, times(1)).save(any(Alert.class));
     }
 }
